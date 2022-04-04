@@ -1,5 +1,5 @@
 locals {
-  name = "apps-test-${var.region}-vpc"
+  name = " sharedsvcs-nonprod-${var.region}-vpc"
 
 }
 module "vpc" {
