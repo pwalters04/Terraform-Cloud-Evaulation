@@ -14,5 +14,6 @@ module "vpc" {
   private_subnets  = var.private_subnet
   tags = {
     Deployment=var.deployment_type
+    Env = "Demo"
   }
 }
