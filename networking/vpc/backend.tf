@@ -5,7 +5,7 @@ terraform {
     organization = "VeloCloud-Terraform"
 
     workspaces {
-      name = "apps-test-us-east-1"
+      name = "sharedsvcs-nonprod-us-east-1"
     }
   }
 
