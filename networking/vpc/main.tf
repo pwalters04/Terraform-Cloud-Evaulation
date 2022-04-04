@@ -1,5 +1,5 @@
 locals {
-  name = "apps-test-${var.region}-vpc"
+  name = "${var.vpc_name}-${var.region}-vpc"
 
 }
 module "vpc" {
