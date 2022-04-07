@@ -30,7 +30,6 @@ module "ec2_instance" {
 
   ami                    = "ami-0c02fb55956c7d316"
   instance_type          = "t2.micro"
-  key_name               = "user1"
   monitoring             = true
   vpc_security_group_ids = ["sg-03fa3d50ea179ad8f"]
   subnet_id              = "subnet-023aeca8a04af0af5"
