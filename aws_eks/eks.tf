@@ -15,53 +15,6 @@ data "aws_vpc" "vpc"{
     values = ["apps-test-us-east-1-vpc"]
   }
 }
-data "aws_subnet_ids" "vpc_subnets"{
-  vpc_id = data.aws_vpc.vpc.id
-
-  filter {
-    name = "tag:Resource"
-    values = ["EKS"]
-  }
-}
-
-resource "aws_security_group" "sg-worker-node-one" {
-  name_prefix = "sg-work-node-one"
-  vpc_id = data.aws_vpc.vpc.id
-
-  ingress {
-    from_port = 22
-    protocol = "tcp"
-    to_port = 22
-
-    cidr_blocks = [var.cidr]
-  }
-}
-
-resource "aws_security_group" "sg-worker-node-two" {
-  name_prefix = "sg-work-node-two"
-  vpc_id = data.aws_vpc.vpc.id
-
-  ingress {
-    from_port = 22
-    protocol = "tcp"
-    to_port = 22
-
-    cidr_blocks = [var.public_cidr]
-  }
-}
-
-resource "aws_security_group" "sg-mgmt-worker" {
-  name_prefix = "sg-mgmt-worker"
-  vpc_id = data.aws_vpc.vpc.id
-
-  ingress {
-    from_port = 22
-    protocol = "tcp"
-    to_port = 22
-
-    cidr_blocks = [var.cidr,var.public_cidr,var.public_cidr_two]
-  }
-}
 
 resource "aws_kms_key" "eks" {
   description = "EKS Secret Encrypt Key"
