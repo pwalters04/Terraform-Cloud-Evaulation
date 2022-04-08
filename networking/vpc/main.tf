@@ -1,5 +1,5 @@
 locals {
-  name = "${var.vpc_name}-${var.region}-vpc-new-one"
+  name = "${var.vpc_name}-${var.region}-vpc-new"
 
 }
 module "vpc" {
