@@ -1,5 +1,5 @@
 locals {
-  name = "${var.vpc_name}-${var.region}-vpc-new"
+  name = "${var.vpc_name}${var.region}-vpc-new"
 
 }
 module "vpc" {
@@ -16,4 +16,8 @@ module "vpc" {
     Deployment=var.sources
     Env = "Demo"
   }
+}
+
+output "vpc-private-subnets" {
+  value = module.vpc.private_subnets
 }
