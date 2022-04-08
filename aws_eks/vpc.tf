@@ -1,5 +1,5 @@
 locals {
-  vpc-name = "apps-test--${var.region}-vpc-new"
+  vpc-name = "apps-test-${var.region}-vpc-new"
 }
 
 data "aws_vpc" "vpc"{
@@ -9,6 +9,6 @@ data "aws_vpc" "vpc"{
   }
 }
 
-output "vpc-info" {
-  value = data.aws_vpc.vpc.tags
+output "vpc-id" {
+  value = data.aws_vpc.vpc.id
 }
