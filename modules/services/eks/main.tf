@@ -47,7 +47,7 @@ resource "aws_eks_cluster" "cluster" {
 # Worker Nodes Infra
 resource "aws_iam_role" "node_group" {
   name = "${var.name}-node-group-role"
-  assume_role_policy = data.aws_iam_policy_document.cluster_assume_role.json
+  assume_role_policy = data.aws_iam_policy_document.node_assume_role.json
 }
 
 data "aws_iam_policy_document" "node_assume_role" {
