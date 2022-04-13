@@ -1,6 +1,6 @@
 module "eks_cluster" {
   source = "../modules/services/eks/"
-  name = "demo-eks-clusters"
+  name = "demo-eks-cluster"
 
   max_size = 1
   min_size = 2

@@ -1,2 +1,7 @@
 /networking/vpc/.terraform.lock.hcl
 /networking/vpc/.terraform
+/aws_eks/.terraform/
+/aws_eks/.terraform.lock.hcl
+/kube-eks/.terraform
+/kube-eks/.terraform.lock.hcl
+/.idea
