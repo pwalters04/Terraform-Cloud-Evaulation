@@ -18,6 +18,7 @@ data "aws_iam_policy_document" "cluster_assume_role" {
 resource "aws_iam_role_policy_attachment" "AmazonEKSClusterPolicy" {
   policy_arn = "arn:aws:iam:aws:policy/AmazonEKSClusterPolicy"
   role = aws_iam_role.cluster.name
+  depends_on = [aws_iam_role.cluster]
 }
 
 data "aws_vpc" "default"{
@@ -37,7 +38,7 @@ resource "aws_eks_cluster" "cluster" {
   role_arn = aws_iam_role.cluster.arn
   vpc_config {
     subnet_ids = [data.aws_subnets.default.ids[0],data.aws_subnets.default.ids[1],data.aws_subnets.default.ids[2],
-      data.aws_subnets.default.ids[3],data.aws_subnets.default.ids[4],data.aws_subnets.default.ids[5]
+      data.aws_subnets.default.ids[3]
     ]
   }
   depends_on = [
@@ -65,23 +66,28 @@ data "aws_iam_policy_document" "node_assume_role" {
 resource "aws_iam_role_policy_attachment" "AmazonEKSWorkerNodePolicy" {
   policy_arn = "arn:aws:iam:aws:policy/AmazonEKSWorkerNodePolicy"
   role = aws_iam_role.node_group.name
+
+  depends_on = [aws_iam_role.node_group]
 }
 
 resource "aws_iam_role_policy_attachment" "AmazonEC2ContainerRegisterReadOnly" {
   policy_arn = "arn:aws:iam:aws:policy/AmazonEC2ContainerRegisterReadOnly"
   role = aws_iam_role.node_group.name
+  depends_on = [aws_iam_role.node_group]
 }
 
 resource "aws_iam_role_policy_attachment" "AmazonEKS_CNI_Policy" {
   policy_arn = "arn:aws:iam:aws:policy/AmazonEKS_CNI_Policy"
   role = aws_iam_role.node_group.name
+  depends_on = [aws_iam_role.node_group]
 }
 
 resource "aws_eks_node_group" "nodes" {
   cluster_name = aws_eks_cluster.cluster.name
   node_group_name = var.name
   node_role_arn = aws_iam_role.node_group.arn
-  subnet_ids = data.aws_subnets.default.ids
+  subnet_ids =[data.aws_subnets.default.ids[0],data.aws_subnets.default.ids[1],data.aws_subnets.default.ids[2],
+    data.aws_subnets.default.ids[3]]
   scaling_config {
     desired_size = var.desired_size
     max_size = var.max_size
@@ -92,6 +98,5 @@ resource "aws_eks_node_group" "nodes" {
   aws_iam_role_policy_attachment.AmazonEKSWorkerNodePolicy,
     aws_iam_role_policy_attachment.AmazonEC2ContainerRegisterReadOnly,
     aws_iam_role_policy_attachment.AmazonEKS_CNI_Policy
-
   ]
 }
